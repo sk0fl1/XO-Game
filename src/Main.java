@@ -6,10 +6,10 @@ public class Main {
         //Creating game board
         int l_board_x = 3, l_board_y = 3;
         Scanner scanner = new Scanner(System.in);
-        int[][] game_board= new int[l_board_x][l_board_y];
+        String[][] game_board= new String[l_board_x][l_board_y];
         for(int i = 0; i < game_board.length; i++){
             for(int j = 0;j < game_board.length; j++){
-                game_board[i][j] = 3;
+                game_board[i][j] = "|  |";
             }
         }
         int[] player_0 = new int[l_board_x];
@@ -22,29 +22,29 @@ public class Main {
             }
         }
         //Game
-        int placed_point;
+        String placed_point;
         int count = 1;
         int x;
         int y;
         do {
             System.out.println("");
             if(count%2 == 0) {
-                placed_point = 1;
+                placed_point = "X";
             } else {
-                placed_point = 0;
+                placed_point = "O";
             }
             count++;
-            if(placed_point == 1) {
-                System.out.println("1 is playing now");
+            if(placed_point.equals("X")) {
+                System.out.println("X is playing now");
             } else {
-                System.out.println("0 is playing now");
+                System.out.println("O is playing now");
             }
             do {
                 System.out.println("Write x coordinate: ");
                 x = scanner.nextInt();
                 System.out.println("Write y coordinate: ");
                 y = scanner.nextInt();
-            } while (CordCheker.CoordChecking(game_board, placed_point, x, y) != 1);
+            } while (CoordChecker.CoordChecking(game_board, placed_point, x, y) != 1);
             game_board[x][y] = placed_point;
             for(int i = 0; i < game_board.length; i++){
                 System.out.println("\n");
