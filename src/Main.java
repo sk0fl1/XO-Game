@@ -23,9 +23,22 @@ public class Main {
         }
         //Game
         String placed_point;
-        int count = 1;
+        int count;
         int x;
         int y;
+        CheckWinner checkWinner = new CheckWinner();
+        int win_result = 0;
+        System.out.println("");
+        System.out.println("Write '1', if u wanna play 'X', or write 'O', if u wanna play 'O'");
+        int player_answer;
+        do {
+            player_answer = scanner.nextInt();
+        } while (player_answer != 1 & player_answer != 0);
+        if (player_answer == 0) {
+            count = 1;
+        } else {
+            count = 0;
+        }
         do {
             System.out.println("");
             if(count%2 == 0) {
@@ -33,11 +46,10 @@ public class Main {
             } else {
                 placed_point = "O";
             }
-            count++;
             if(placed_point.equals("X")) {
-                System.out.println("X is playing now");
+                System.out.println(placed_point + " is playing now");
             } else {
-                System.out.println("O is playing now");
+                System.out.println(placed_point + " is playing now");
             }
             do {
                 System.out.println("Write x coordinate: ");
@@ -46,17 +58,34 @@ public class Main {
                 y = scanner.nextInt();
             } while (CoordChecker.CoordChecking(game_board, placed_point, x, y) != 1);
             game_board[x][y] = placed_point;
+            if (CheckWinner.checking(game_board, placed_point) == 1) {
+                win_result = 1;
+            }
+            count ++;
+            if(count%2 == 0) {
+                placed_point = "X";
+            } else {
+                placed_point = "O";
+            }
+            AIGenerator aiGenerator = new AIGenerator();
+            game_board[aiGenerator.AiPlaced(game_board,placed_point)[0]][aiGenerator.AiPlaced(game_board,placed_point)[1]] = placed_point;
             for(int i = 0; i < game_board.length; i++){
                 System.out.println("\n");
                 for(int j = 0;j < game_board.length; j++){
                     System.out.print(game_board[i][j] + "   ");
                 }
             }
-            CheckWinner checkWinner = new CheckWinner();}
-            while (CheckWinner.checking(game_board, placed_point) != 1);
+            if (CheckWinner.checking(game_board, placed_point) == 1) {
+                win_result = 1;
+            }
+            count++;
+            }
+            while (win_result != 1);
+        if(count%2 == 0) {
+            placed_point = "X";
+        } else {
+            placed_point = "O";
+        }
             System.out.println("\n" + placed_point + " Win!!!");
-
-
-
     }
 }
